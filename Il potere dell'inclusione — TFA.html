@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<!-- saved from url=(0043)file:///C:/Users/igna7/Downloads/index.html -->
+<html lang="it"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Il potere dell'inclusione — TFA</title>
+<meta name="description" content="Sito interattivo per la discussione della tesi TFA: Il potere dell'inclusione.">
+<style>
+:root{
+  --ink:#23312c; --muted:#65736d; --paper:#f7f5ef; --card:#fffdf8;
+  --sage:#6f8d7b; --sage2:#dfe9e2; --terracotta:#d88767; --sun:#e8c878;
+  --line:#dfe4df; --shadow:0 18px 50px rgba(35,49,44,.10);
+  --radius:24px;
+}
+*{box-sizing:border-box;scroll-behavior:smooth}
+body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6}
+button,a{font:inherit}
+a{text-decoration:none;color:inherit}
+.topbar{position:sticky;top:0;z-index:50;background:rgba(247,245,239,.90);backdrop-filter:blur(14px);border-bottom:1px solid rgba(223,228,223,.9)}
+.nav{max-width:1180px;margin:auto;padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{font-weight:800;letter-spacing:-.03em}.brand small{display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);font-weight:700}
+.navlinks{display:flex;gap:7px;flex-wrap:wrap;justify-content:flex-end}
+.navlinks a{padding:9px 12px;border-radius:999px;font-size:13px;font-weight:700;color:var(--muted)}
+.navlinks a:hover,.navlinks a.active{background:var(--ink);color:white}
+.hero{min-height:78vh;display:grid;place-items:center;padding:80px 22px 60px;position:relative;overflow:hidden;background:
+ radial-gradient(circle at 10% 15%,rgba(232,200,120,.35),transparent 28%),
+ radial-gradient(circle at 90% 30%,rgba(111,141,123,.22),transparent 32%)}
+.hero-inner{max-width:1180px;width:100%;display:grid;grid-template-columns:1.15fr .85fr;gap:54px;align-items:center}
+.eyebrow{display:inline-flex;gap:8px;align-items:center;background:var(--sage2);color:#486052;border-radius:999px;padding:8px 13px;font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.1em}
+h1{font-size:clamp(48px,7vw,92px);line-height:.95;letter-spacing:-.065em;margin:22px 0 20px;max-width:760px}
+.hero p{font-size:20px;color:var(--muted);max-width:650px}
+.hero-quote{margin-top:30px;font-size:16px;font-weight:700;color:var(--ink);border-left:4px solid var(--terracotta);padding-left:18px}
+.hero-photo{border-radius:34px;overflow:hidden;box-shadow:var(--shadow);transform:rotate(2deg);background:#ddd}
+.hero-photo img{width:100%;height:540px;object-fit:cover;display:block}
+.section{max-width:1180px;margin:auto;padding:92px 22px}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:34px}
+.kicker{font-size:12px;text-transform:uppercase;letter-spacing:.13em;color:var(--sage);font-weight:900}
+h2{font-size:clamp(34px,4vw,56px);line-height:1.02;letter-spacing:-.045em;margin:8px 0 0}
+.lead{max-width:640px;color:var(--muted);font-size:17px}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:25px;box-shadow:0 8px 28px rgba(35,49,44,.04);transition:.25s}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.card .icon{width:48px;height:48px;display:grid;place-items:center;border-radius:15px;background:var(--sage2);font-size:22px;margin-bottom:18px}
+.card h3{margin:0 0 8px;font-size:20px}.card p{margin:0;color:var(--muted);font-size:15px}
+.clickable{cursor:pointer}
+.pill{display:inline-block;padding:5px 9px;border-radius:999px;background:#f0ece1;color:#685e45;font-size:11px;font-weight:800;margin:12px 5px 0 0}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+.profile{background:var(--ink);color:#fff;border-radius:30px;padding:32px}
+.profile p{color:#d9e0dc}.profile ul{padding-left:20px}.profile li{margin:10px 0}
+.strength{background:#edf4ef;border:1px solid #d6e4da;border-radius:30px;padding:32px}
+.strength li{margin:11px 0}
+.timeline{position:relative;margin-top:20px}.timeline:before{content:"";position:absolute;left:19px;top:8px;bottom:8px;width:2px;background:var(--line)}
+.step{position:relative;padding:0 0 26px 60px}.dot{position:absolute;left:8px;top:2px;width:23px;height:23px;border-radius:50%;background:var(--terracotta);border:5px solid var(--paper)}
+.step strong{display:block;font-size:18px}.step span{color:var(--muted)}
+.subjects{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.subject-btn{border:1px solid var(--line);background:var(--card);border-radius:18px;padding:17px;text-align:left;cursor:pointer;font-weight:800;color:var(--ink)}
+.subject-btn:hover,.subject-btn.active{border-color:var(--sage);background:var(--sage2)}
+.subject-detail{margin-top:18px;background:var(--card);border:1px solid var(--line);border-radius:25px;padding:28px;min-height:130px}
+.gallery{display:grid;grid-template-columns:1.1fr .9fr;grid-template-rows:260px 260px;gap:14px}
+.gallery figure{margin:0;overflow:hidden;border-radius:25px;position:relative;background:#ddd;cursor:pointer}
+.gallery figure:first-child{grid-row:1 / span 2}
+.gallery img{width:100%;height:100%;object-fit:cover;display:block;transition:.35s}
+.gallery figure:hover img{transform:scale(1.04)}
+.gallery figcaption{position:absolute;left:14px;bottom:14px;background:rgba(35,49,44,.82);color:white;padding:8px 11px;border-radius:999px;font-size:12px;font-weight:800}
+.callout{margin-top:22px;padding:25px 28px;border-radius:25px;background:linear-gradient(135deg,#f0e8d5,#eef4ef);border:1px solid var(--line)}
+.callout strong{font-size:18px}
+.assessment{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:28px}
+.scale{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.scale button{border:1px solid var(--line);background:#fff;border-radius:16px;padding:12px 16px;cursor:pointer}
+.scale button.selected{background:var(--ink);color:#fff;border-color:var(--ink)}
+.result{display:none;margin-top:20px;padding:17px;border-radius:18px;background:var(--sage2);font-weight:700}
+.quote{font-family:Georgia,serif;font-size:27px;line-height:1.25;padding:30px;border-left:5px solid var(--terracotta);background:#fff;border-radius:0 25px 25px 0}
+.footer{padding:55px 22px;text-align:center;color:var(--muted);border-top:1px solid var(--line)}
+.modal{position:fixed;inset:0;background:rgba(16,24,20,.76);display:none;align-items:center;justify-content:center;padding:25px;z-index:100}
+.modal.open{display:flex}.modal-box{max-width:980px;width:100%;background:var(--card);border-radius:28px;padding:14px;position:relative}
+.modal-box img{width:100%;max-height:78vh;object-fit:contain;border-radius:18px;display:block}
+.close{position:absolute;right:22px;top:22px;width:40px;height:40px;border:0;border-radius:50%;background:#fff;cursor:pointer;font-size:22px}
+@media(max-width:900px){.hero-inner,.split{grid-template-columns:1fr}.hero-photo img{height:420px}.grid{grid-template-columns:1fr 1fr}.subjects{grid-template-columns:1fr 1fr}.gallery{grid-template-columns:1fr;grid-template-rows:320px 180px 180px}.gallery figure:first-child{grid-row:auto}}
+@media(max-width:620px){.nav{align-items:flex-start}.navlinks{display:none}.hero{padding-top:55px}.grid,.subjects{grid-template-columns:1fr}.section{padding:68px 18px}h1{font-size:52px}.hero p{font-size:17px}.gallery{display:block}.gallery figure{height:260px;margin-bottom:12px}}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <nav class="nav">
+    <a class="brand" href="file:///C:/Users/igna7/Downloads/index.html#home">IL POTERE DELL'INCLUSIONE<small>TFA · percorso di crescita</small></a>
+    <div class="navlinks">
+      <a href="file:///C:/Users/igna7/Downloads/index.html#progetto">Il progetto</a>
+      <a href="file:///C:/Users/igna7/Downloads/index.html#profilo">Il profilo</a>
+      <a href="file:///C:/Users/igna7/Downloads/index.html#materie">Le materie</a>
+      <a href="file:///C:/Users/igna7/Downloads/index.html#attivita">Le attività</a>
+      <a href="file:///C:/Users/igna7/Downloads/index.html#stremiz">Stremiz</a>
+      <a href="file:///C:/Users/igna7/Downloads/index.html#autovalutazione">Autovalutazione</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+<section id="home" class="hero">
+  <div class="hero-inner">
+    <div>
+      <span class="eyebrow">TFA · inclusione · scuola</span>
+      <h1>Il potere dell'inclusione</h1>
+      <p>Un percorso che parte dalla persona, valorizza ciò che sa fare e costruisce occasioni perché possa sentirsi parte del gruppo, partecipare e riconoscere i propri progressi.</p>
+      <div class="hero-quote">«Ogni passo conta quando il contesto permette di esserci davvero.»</div>
+    </div>
+    <div class="hero-photo">
+      <img src="file:///C:/Users/igna7/Downloads/images/stremiz_3.jpg" alt="Un momento dell'uscita didattica nel bosco di Stremiz">
+    </div>
+  </div>
+</section>
+
+<section id="progetto" class="section">
+  <div class="section-head">
+    <div><div class="kicker">01 · Il progetto</div><h2>Una scuola che apre possibilità</h2></div>
+    <p class="lead">La struttura riprende l'idea del sito di riferimento: una navigazione semplice, sezioni dedicate e materiali interattivi. Il focus viene spostato dal semplice prodotto finale al percorso educativo.</p>
+  </div>
+  <div class="grid">
+    <article class="card clickable" onclick="openInfo('osservazione')"><div class="icon">🔎</div><h3>Osservazione</h3><p>Individuare bisogni, interessi, modalità di partecipazione e condizioni che facilitano l'apprendimento.</p><span class="pill">clicca per approfondire</span></article>
+    <article class="card clickable" onclick="openInfo('obiettivi')"><div class="icon">🎯</div><h3>Obiettivi</h3><p>Favorire partecipazione, autonomia, comunicazione, fiducia nelle proprie possibilità e appartenenza al gruppo.</p><span class="pill">clicca per approfondire</span></article>
+    <article class="card clickable" onclick="openInfo('metodo')"><div class="icon">🧩</div><h3>Mediazione</h3><p>Consegne chiare, tempi distesi, supporti visivi, rinforzo positivo e attività significative.</p><span class="pill">clicca per approfondire</span></article>
+  </div>
+</section>
+
+<section id="profilo" class="section">
+  <div class="section-head"><div><div class="kicker">02 · Il profilo</div><h2>Guardare prima alle risorse</h2></div></div>
+  <div class="split">
+    <div class="profile">
+      <h3>Bisogni educativi osservati</h3>
+      <ul>
+        <li>disabilità cognitiva lieve;</li>
+        <li>timore nell'esprimersi e bisogno di essere sostenuto nella comunicazione;</li>
+        <li>autostima fragile;</li>
+        <li>tendenza ad arrendersi quando perde il filo dell'attività;</li>
+        <li>necessità di consegne brevi, concrete e di una mediazione costante.</li>
+      </ul>
+    </div>
+    <div class="strength">
+      <h3>Punti di forza da attivare</h3>
+      <ul>
+        <li><strong>Bontà e disponibilità</strong> nelle relazioni.</li>
+        <li><strong>Rispetto</strong> verso i pari e verso le figure istituzionali.</li>
+        <li><strong>Capacità di stare nel gruppo</strong> quando il contesto è accogliente e motivante.</li>
+        <li><strong>Partecipazione emotiva</strong> nelle esperienze concrete e significative.</li>
+        <li><strong>Possibilità di successo</strong> quando l'attività è graduata e il risultato è visibile.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="materie" class="section">
+  <div class="section-head"><div><div class="kicker">03 · Le materie</div><h2>Un unico percorso, più linguaggi</h2></div><p class="lead">Clicca una materia: la scheda mostra un possibile aggancio inclusivo. I contenuti specifici potranno essere sostituiti con quelli della tua tesi.</p></div>
+  <div class="subjects" id="subjectButtons"><button class="subject-btn active">Italiano</button><button class="subject-btn">Matematica</button><button class="subject-btn">Storia</button><button class="subject-btn">Geografia</button><button class="subject-btn">Scienze</button><button class="subject-btn">Tecnologia</button><button class="subject-btn">Arte</button><button class="subject-btn">Educazione civica</button></div>
+  <div class="subject-detail" id="subjectDetail"><h3>Comprensione e produzione</h3><p>testi brevi, parole-chiave, immagini e domande guidate per favorire l'espressione personale.</p></div>
+</section>
+
+<section id="attivita" class="section">
+  <div class="section-head"><div><div class="kicker">04 · Le attività</div><h2>Imparare facendo</h2></div></div>
+  <div class="grid">
+    <article class="card"><div class="icon">🗺️</div><h3>Attività concrete</h3><p>Esperienze che permettono di osservare, fare, scegliere e raccontare.</p></article>
+    <article class="card"><div class="icon">🤝</div><h3>Apprendimento tra pari</h3><p>Il gruppo diventa risorsa: collaborazione, aiuto reciproco e appartenenza.</p></article>
+    <article class="card"><div class="icon">💬</div><h3>Comunicazione</h3><p>Domande brevi, immagini, parole-chiave e possibilità di rispondere con modalità diverse.</p></article>
+  </div>
+  <div class="timeline">
+    <div class="step"><div class="dot"></div><strong>Partire da ciò che motiva</strong><span>Un'esperienza concreta può diventare l'occasione per attivare attenzione e curiosità.</span></div>
+    <div class="step"><div class="dot"></div><strong>Accompagnare senza sostituire</strong><span>Il sostegno serve a rendere possibile la partecipazione, lasciando spazio all'iniziativa personale.</span></div>
+    <div class="step"><div class="dot"></div><strong>Rendere visibile il successo</strong><span>Documentare ciò che è riuscito aiuta a costruire consapevolezza e autostima.</span></div>
+  </div>
+</section>
+
+<section id="stremiz" class="section">
+  <div class="section-head">
+    <div><div class="kicker">05 · Esperienza significativa</div><h2>Stremiz: quando il gruppo diventa una risorsa</h2></div>
+    <p class="lead">Una pagina nata da un'esperienza reale documentata durante l'uscita: il ragazzo ha mostrato entusiasmo e partecipazione in un contesto naturale e condiviso con i compagni.</p>
+  </div>
+  <div class="gallery">
+    <figure onclick="openPhoto('images/stremiz_3.jpg')"><img src="file:///C:/Users/igna7/Downloads/images/stremiz_3.jpg" alt="Il gruppo durante il percorso nel bosco"><figcaption>Il gruppo · esserci insieme</figcaption></figure>
+    <figure onclick="openPhoto('images/stremiz_1.jpg')"><img src="file:///C:/Users/igna7/Downloads/images/stremiz_1.jpg" alt="Percorso nel bosco"><figcaption>Esplorare · esperienza concreta</figcaption></figure>
+    <figure onclick="openPhoto('images/stremiz_2.jpg')"><img src="file:///C:/Users/igna7/Downloads/images/stremiz_2.jpg" alt="Percorso nel bosco"><figcaption>Muoversi · partecipare</figcaption></figure>
+  </div>
+  <div class="callout">
+    <strong>Che cosa racconta questa esperienza?</strong>
+    <p>Non solo una giornata all'aperto. L'uscita offre un contesto nel quale partecipare, camminare insieme, osservare l'ambiente e condividere un'esperienza con i pari. Per la documentazione della tesi, questa sezione può diventare un'evidenza narrativa del rapporto tra <em>contesto, motivazione e partecipazione</em>.</p>
+  </div>
+</section>
+
+<section id="autovalutazione" class="section">
+  <div class="section-head"><div><div class="kicker">06 · Autovalutazione</div><h2>«Come mi sono sentito?»</h2></div><p class="lead">Uno strumento semplice e visivo. Le risposte restano nel browser e servono come demo per la discussione.</p></div>
+  <div class="assessment">
+    <h3>Durante un'attività, quanto ti sei sentito coinvolto?</h3>
+    <div class="scale">
+      <button data-score="1">😕 Poco</button><button data-score="2">🙂 Abbastanza</button><button data-score="3">😊 Molto</button><button data-score="4">🌟 Tantissimo</button>
+    </div>
+    <h3>Quanto ti è piaciuto lavorare con i compagni?</h3>
+    <div class="scale">
+      <button data-score="1">😕 Poco</button><button data-score="2">🙂 Abbastanza</button><button data-score="3">😊 Molto</button><button data-score="4">🌟 Tantissimo</button>
+    </div>
+    <div id="result" class="result"></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="quote">L'inclusione non significa fare tutti la stessa cosa. Significa creare le condizioni perché ciascuno possa partecipare, avere un ruolo e scoprire di poter fare.</div>
+</section>
+</main>
+
+<footer class="footer">
+  <strong>Il potere dell'inclusione</strong><br>
+  Sito per la discussione della tesi TFA · versione demo interattiva
+  <p style="font-size:12px">Nota privacy: le fotografie di minori vanno utilizzate online o durante la discussione solo nel rispetto delle autorizzazioni e delle regole dell'istituto.</p>
+</footer>
+
+<div class="modal" id="photoModal" onclick="closeModal(event)">
+  <div class="modal-box"><button class="close" onclick="closePhoto()">×</button><img id="modalImg" src="file:///C:/Users/igna7/Downloads/index.html" alt=""></div>
+</div>
+<div class="modal" id="infoModal" onclick="closeInfo(event)">
+  <div class="modal-box" style="padding:32px"><button class="close" onclick="closeInfo()">×</button><div id="infoContent"></div></div>
+</div>
+
+<script>
+const subjects = {
+ "Italiano":["Comprensione e produzione","testi brevi, parole-chiave, immagini e domande guidate per favorire l'espressione personale."],
+ "Matematica":["Problem solving","situazioni concrete, passaggi visibili e materiali manipolabili per sostenere l'attenzione e il controllo del procedimento."],
+ "Storia":["Linea del tempo","sequenze visive, immagini e collegamenti causa-effetto per costruire una narrazione ordinata."],
+ "Geografia":["Orientamento","mappe semplici, percorsi e riferimenti spaziali: l'esperienza di Stremiz può diventare un punto di partenza."],
+ "Scienze":["Osservare l'ambiente","partire dall'esperienza diretta per classificare, descrivere e formulare semplici ipotesi."],
+ "Tecnologia":["Strumenti digitali","attività interattive e prodotti digitali per rendere più accessibile la consegna e documentare il lavoro."],
+ "Arte":["Raccontare per immagini","fotografie, colori e composizioni per comunicare anche quando le parole sono difficili."],
+ "Educazione civica":["Regole e rispetto","valorizzare il rispetto verso i compagni, gli adulti e gli spazi condivisi."]
+};
+const buttons=document.getElementById('subjectButtons'), detail=document.getElementById('subjectDetail');
+Object.entries(subjects).forEach(([name,[title,text]],i)=>{
+ const b=document.createElement('button'); b.className='subject-btn'+(i===0?' active':''); b.textContent=name;
+ b.onclick=()=>{document.querySelectorAll('.subject-btn').forEach(x=>x.classList.remove('active'));b.classList.add('active');detail.innerHTML=`<h3>${title}</h3><p>${text}</p>`};
+ buttons.appendChild(b);
+});
+detail.innerHTML=`<h3>${subjects.Italiano[0]}</h3><p>${subjects.Italiano[1]}</p>`;
+
+const infos={
+ osservazione:{t:"Osservazione",b:"L'osservazione iniziale può essere organizzata attorno a quattro domande: che cosa facilita la partecipazione? Quando perde l'attenzione? Quali modalità comunicative preferisce? In quali situazioni emergono spontaneamente le sue risorse?"},
+ obiettivi:{t:"Obiettivi",b:"Rendere più accessibili le attività, sostenere la fiducia nelle proprie capacità, aumentare le occasioni di scelta e di comunicazione e favorire una partecipazione più autonoma nel gruppo."},
+ metodo:{t:"Mediazione",b:"La mediazione non sostituisce l'alunno: riduce gli ostacoli. Consegne brevi, anticipazioni, supporti visivi, rinforzo positivo e compiti graduati permettono di mantenere il focus e sperimentare il successo."}
+};
+function openInfo(k){document.getElementById('infoContent').innerHTML=`<div class="kicker">Approfondimento</div><h2>${infos[k].t}</h2><p style="font-size:18px;color:var(--muted)">${infos[k].b}</p>`;document.getElementById('infoModal').classList.add('open')}
+function closeInfo(e){if(!e||e.target.id==='infoModal')document.getElementById('infoModal').classList.remove('open')}
+function openPhoto(src){document.getElementById('modalImg').src=src;document.getElementById('photoModal').classList.add('open')}
+function closePhoto(){document.getElementById('photoModal').classList.remove('open')}
+function closeModal(e){if(e.target.id==='photoModal')closePhoto()}
+
+const groups=document.querySelectorAll('.scale');
+let answers=[];
+groups.forEach((group,gi)=>{
+ group.querySelectorAll('button').forEach(btn=>{
+  btn.onclick=()=>{
+   group.querySelectorAll('button').forEach(x=>x.classList.remove('selected'));
+   btn.classList.add('selected'); answers[gi]=Number(btn.dataset.score);
+   if(answers.length===2 && answers.every(Boolean)){
+    const avg=(answers[0]+answers[1])/2;
+    const msg=avg>=3.5?"🌟 Ti sei sentito molto coinvolto: racconta che cosa ha funzionato per te.":avg>=2.5?"😊 Ti sei sentito abbastanza coinvolto: cosa avrebbe potuto aiutarti ancora?":"🙂 Possiamo capire insieme quale supporto avrebbe reso l'attività più facile.";
+    const r=document.getElementById('result');r.textContent=msg;r.style.display='block';
+   }
+  }
+ })
+});
+
+const links=[...document.querySelectorAll('.navlinks a')];
+const sections=links.map(a=>document.querySelector(a.getAttribute('href'))).filter(Boolean);
+window.addEventListener('scroll',()=>{
+ let current='home'; sections.forEach(s=>{if(window.scrollY>=s.offsetTop-130)current=s.id});
+ links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+current));
+});
+</script>
+
+</body></html>
