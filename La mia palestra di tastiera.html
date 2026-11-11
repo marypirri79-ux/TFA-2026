@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)file:///C:/Users/igna7/Downloads/palestra_tastiera%20(1).html -->
+<html lang="it"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>La mia palestra di tastiera</title>
+<style>
+  :root { --ink:#18324b; --blue:#1769aa; --pale:#eaf4ff; --green:#247a50; --orange:#a65312; }
+  * { box-sizing:border-box; }
+  body { margin:0; font-family:Arial,Helvetica,sans-serif; color:var(--ink); background:#f3f7fb; font-size:18px; }
+  main { width:min(980px, 100%); margin:auto; padding:20px; }
+  h1 { text-align:center; font-size:clamp(1.8rem,5vw,2.7rem); margin:8px 0; }
+  .intro { text-align:center; margin:0 0 20px; }
+  .panel { background:white; border-radius:18px; padding:20px; margin:16px 0; box-shadow:0 3px 14px #17324b12; }
+  .fields { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  label { display:block; font-weight:bold; margin-bottom:7px; }
+  input[type=text] { width:100%; min-height:54px; border:2px solid #9bb5ca; border-radius:12px; padding:10px 12px; font-size:1.15rem; }
+  .timer-row { display:flex; flex-wrap:wrap; align-items:center; justify-content:center; gap:14px; }
+  #timer { font-size:clamp(2.5rem,8vw,4rem); font-weight:bold; font-variant-numeric:tabular-nums; color:var(--blue); min-width:175px; text-align:center; }
+  button { border:0; border-radius:13px; padding:14px 20px; font-size:1.05rem; font-weight:bold; cursor:pointer; min-height:52px; }
+  button:focus-visible, input:focus-visible { outline:4px solid #f0b429; outline-offset:3px; }
+  .primary { background:var(--blue); color:white; }
+  .soft { background:var(--pale); color:var(--ink); }
+  .success { background:var(--green); color:white; }
+  .warn { background:#fff0df; color:#71380b; }
+  .controls { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; }
+  .prompt { background:#eef6ff; border:2px dashed #9bbfe0; border-radius:14px; padding:16px; text-align:center; font-size:clamp(1.7rem,6vw,2.5rem); font-weight:bold; min-height:90px; display:grid; place-items:center; }
+  .target { margin:12px 0 6px; text-align:center; color:#4c6478; }
+  #typed { width:100%; min-height:76px; resize:vertical; border:2px solid #9bb5ca; border-radius:12px; padding:14px; font:1.5rem Arial,sans-serif; }
+  .keyboard { display:grid; grid-template-columns:repeat(7,1fr); gap:8px; margin-top:14px; }
+  .key { background:#eaf1f7; color:#18324b; border:2px solid #c3d3e0; padding:13px 4px; min-height:58px; font-size:1.35rem; }
+  .key.space { grid-column:span 4; }
+  .key.back { grid-column:span 3; background:#fff0df; }
+  .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; text-align:center; }
+  .stat { background:#f1f7fc; border-radius:12px; padding:12px 6px; }
+  .stat strong { display:block; font-size:1.8rem; margin-top:5px; }
+  .note { color:#526a7d; font-size:.95rem; line-height:1.5; }
+  #feedback { min-height:1.5em; text-align:center; font-weight:bold; color:var(--green); }
+  @media(max-width:600px) { main{padding:12px} .fields{grid-template-columns:1fr} .keyboard{grid-template-columns:repeat(5,1fr)} .key.space{grid-column:span 3} .key.back{grid-column:span 2} .stats{grid-template-columns:1fr 1fr} }
+</style>
+</head>
+<body>
+<main>
+  <h1>⌨️ La mia palestra di tastiera</h1>
+  <p class="intro">Un tasto alla volta. Prova con calma!</p>
+
+  <section class="panel" aria-label="Dati della sessione">
+    <div class="fields">
+      <div><label for="firstName">Nome</label><input id="firstName" type="text" autocomplete="given-name" placeholder="Scrivi il nome"></div>
+      <div><label for="lastName">Cognome</label><input id="lastName" type="text" autocomplete="family-name" placeholder="Scrivi il cognome"></div>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2 style="text-align:center;margin-top:0">⏱️ Il mio tempo</h2>
+    <div class="timer-row">
+      <div id="timer" role="timer" aria-live="off">00:00</div>
+      <div class="controls">
+        <button class="primary" id="startBtn">▶ Inizia</button>
+        <button class="soft" id="pauseBtn">⏸ Pausa</button>
+        <button class="warn" id="resetBtn">↺ Azzera</button>
+      </div>
+    </div>
+    <p class="note" style="text-align:center">Il timer parte quando premi “Inizia”. Puoi fermarti e riposare quando vuoi.</p>
+  </section>
+
+  <section class="panel">
+    <h2 style="text-align:center;margin-top:0">🎯 Prova a scrivere</h2>
+    <div class="prompt" id="prompt" aria-live="polite">CIAO</div>
+    <p class="target">Copia la parola qui sotto:</p>
+    <label for="typed">La mia scrittura</label>
+    <textarea id="typed" rows="2" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Tocca qui e scrivi..."></textarea>
+    <div class="keyboard" id="keyboard" aria-label="Tastiera sullo schermo"><button class="key" type="button" aria-label="Q">Q</button><button class="key" type="button" aria-label="W">W</button><button class="key" type="button" aria-label="E">E</button><button class="key" type="button" aria-label="R">R</button><button class="key" type="button" aria-label="T">T</button><button class="key" type="button" aria-label="Y">Y</button><button class="key" type="button" aria-label="U">U</button><button class="key" type="button" aria-label="I">I</button><button class="key" type="button" aria-label="O">O</button><button class="key" type="button" aria-label="P">P</button><button class="key" type="button" aria-label="A">A</button><button class="key" type="button" aria-label="S">S</button><button class="key" type="button" aria-label="D">D</button><button class="key" type="button" aria-label="F">F</button><button class="key" type="button" aria-label="G">G</button><button class="key" type="button" aria-label="H">H</button><button class="key" type="button" aria-label="J">J</button><button class="key" type="button" aria-label="K">K</button><button class="key" type="button" aria-label="L">L</button><button class="key" type="button" aria-label="Z">Z</button><button class="key" type="button" aria-label="X">X</button><button class="key" type="button" aria-label="C">C</button><button class="key" type="button" aria-label="V">V</button><button class="key" type="button" aria-label="B">B</button><button class="key" type="button" aria-label="N">N</button><button class="key" type="button" aria-label="M">M</button><button class="key space" type="button">SPAZIO</button><button class="key back" type="button">⌫ Cancella</button></div>
+    <p id="feedback" aria-live="polite"></p>
+    <div class="controls">
+      <button class="soft" id="newBtn">Nuova parola</button>
+      <button class="soft" id="clearBtn">Cancella testo</button>
+    </div>
+  </section>
+
+  <section class="panel">
+    <h2 style="text-align:center;margin-top:0">📊 Risultati</h2>
+    <div class="stats">
+      <div class="stat">Parole completate<strong id="completed">0</strong></div>
+      <div class="stat">Caratteri scritti<strong id="chars">0</strong></div>
+      <div class="stat">Tempo attivo<strong id="activeTime">00:00</strong></div>
+    </div>
+    <div class="controls" style="margin-top:18px">
+      <button class="success" id="saveBtn">💾 Salva sessione</button>
+      <button class="primary" id="downloadBtn">⬇ Scarica report</button>
+    </div>
+    <p class="note">“Salva sessione” conserva i dati in questo browser. “Scarica report” crea un file CSV che puoi aprire con un foglio di calcolo.</p>
+    <p id="saveStatus" class="note" role="status" aria-live="polite"></p>
+  </section>
+</main>
+<script>
+(() => {
+  const words = ["CIAO","CASA","SOLE","LUNA","MELA","PANE","GATTO","CANE","PALLA","FIORE","MARE","AMICO","NONNA","PAPÀ","MAMMA","ROSA","LIMONE","TRENO"];
+  const $ = id => document.getElementById(id);
+  let seconds = 0, running = false, tick = null, completed = 0, lastCounted = "";
+  let prompt = "CIAO";
+  const timerText = n => String(Math.floor(n/60)).padStart(2,"0")+":"+String(n%60).padStart(2,"0");
+  function renderTime() { $("timer").textContent=timerText(seconds); $("activeTime").textContent=timerText(seconds); }
+  function start() { if (running) return; running=true; tick=setInterval(()=>{seconds++;renderTime();},1000); }
+  function pause() { running=false; clearInterval(tick); tick=null; }
+  function reset() { pause(); seconds=0; renderTime(); }
+  function updateStats() { $("completed").textContent=completed; $("chars").textContent=$("typed").value.length; }
+  function chooseWord() {
+    let next=prompt;
+    while(words.length>1 && next===prompt) next=words[Math.floor(Math.random()*words.length)];
+    prompt=next; $("prompt").textContent=prompt; $("typed").value=""; lastCounted=""; $("feedback").textContent=""; updateStats();
+  }
+  function checkText() {
+    const value=$("typed").value;
+    updateStats();
+    if(value.trim().toLocaleUpperCase("it-IT")===prompt && lastCounted!==prompt) {
+      completed++; lastCounted=prompt; updateStats(); $("feedback").textContent="⭐ Bravissimo! Parola completata!";
+    } else if(value.length>0) $("feedback").textContent="";
+  }
+  $("startBtn").addEventListener("click",start);
+  $("pauseBtn").addEventListener("click",pause);
+  $("resetBtn").addEventListener("click",reset);
+  $("newBtn").addEventListener("click",chooseWord);
+  $("clearBtn").addEventListener("click",()=>{$("typed").value="";lastCounted="";$("feedback").textContent="";updateStats();$("typed").focus();});
+  $("typed").addEventListener("input",checkText);
+  const keys="QWERTYUIOPASDFGHJKLZXCVBNM".split("");
+  const keyboard=$("keyboard");
+  keys.forEach(k=>{const b=document.createElement("button");b.className="key";b.type="button";b.textContent=k;b.setAttribute("aria-label",k);b.addEventListener("click",()=>{ $("typed").value+=k; $("typed").focus(); checkText(); });keyboard.appendChild(b);});
+  const space=document.createElement("button");space.className="key space";space.type="button";space.textContent="SPAZIO";space.addEventListener("click",()=>{$("typed").value+=" ";$("typed").focus();checkText();});keyboard.appendChild(space);
+  const back=document.createElement("button");back.className="key back";back.type="button";back.textContent="⌫ Cancella";back.addEventListener("click",()=>{$("typed").value=$("typed").value.slice(0,-1);$("typed").focus();checkText();});keyboard.appendChild(back);
+  function reportData() {
+    return {
+      nome:$("firstName").value.trim(), cognome:$("lastName").value.trim(),
+      data:new Date().toLocaleString("it-IT"), durata:timerText(seconds),
+      parole_completate:completed, caratteri_scritti:$("typed").value.length,
+      ultima_parola:prompt, testo_digitato:$("typed").value
+    };
+  }
+  function csvCell(v) { return '"'+String(v??"").replace(/"/g,'""')+'"'; }
+  $("saveBtn").addEventListener("click",()=>{
+    try { localStorage.setItem("palestraTastieraSessione",JSON.stringify(reportData())); $("saveStatus").textContent="Sessione salvata su questo dispositivo."; }
+    catch(e) { $("saveStatus").textContent="Salvataggio non disponibile in questo browser. Puoi scaricare il report."; }
+  });
+  $("downloadBtn").addEventListener("click",()=>{
+    const d=reportData(), rows=[["Campo","Valore"],...Object.entries(d)];
+    const csv="\uFEFF"+rows.map(r=>r.map(csvCell).join(";")).join("\r\n");
+    const blob=new Blob([csv],{type:"text/csv;charset=utf-8;"});
+    const url=URL.createObjectURL(blob), a=document.createElement("a");
+    const base=((d.nome||"sessione")+"_"+(d.cognome||"tastiera")).replace(/[^a-z0-9_-]/gi,"_");
+    a.href=url;a.download="report_"+base+".csv";document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+    $("saveStatus").textContent="Report scaricato.";
+  });
+  renderTime(); updateStats();
+})();
+</script>
+
+</body></html>
