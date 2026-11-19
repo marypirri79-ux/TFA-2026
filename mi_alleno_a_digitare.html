@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mi alleno a digitare</title>
+<style>
+  :root {
+    --bg: #f3f6fb;
+    --panel: #ffffff;
+    --text: #172033;
+    --muted: #526078;
+    --accent: #1457b8;
+    --accent-contrast: #ffffff;
+    --good: #147a42;
+    --bad: #b42318;
+    --border: #b8c4d6;
+    --font-size: 25px;
+    --line-height: 1.8;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; padding: 20px;
+    background: var(--bg); color: var(--text);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 18px; line-height: 1.5;
+  }
+  body.high-contrast {
+    --bg: #000; --panel: #101010; --text: #fff; --muted: #f0f0f0;
+    --accent: #ffdf00; --accent-contrast: #000; --good: #7dff9b;
+    --bad: #ff8b8b; --border: #fff;
+  }
+  body.soft-theme {
+    --bg: #fff8e8; --panel: #fffdf6; --text: #352b20;
+    --muted: #665b4d; --accent: #6c4aa1; --accent-contrast: #fff;
+    --border: #c9bda9;
+  }
+  .container { max-width: 1100px; margin: 0 auto; }
+  header { text-align: center; margin: 0 auto 22px; }
+  h1 { font-size: clamp(2rem, 5vw, 3rem); margin: 0 0 8px; }
+  h2 { font-size: 1.45rem; margin: 0 0 12px; }
+  p { margin: 8px 0; }
+  .panel {
+    background: var(--panel); border: 2px solid var(--border);
+    border-radius: 18px; padding: 20px; margin: 16px 0;
+  }
+  .controls { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  button, select, input, textarea { font: inherit; }
+  button {
+    border: 2px solid var(--accent); border-radius: 12px;
+    background: var(--accent); color: var(--accent-contrast);
+    padding: 12px 18px; font-weight: 700; cursor: pointer;
+    min-height: 48px;
+  }
+  button.secondary { background: var(--panel); color: var(--text); border-color: var(--border); }
+  button:focus-visible, textarea:focus-visible, input:focus-visible, select:focus-visible {
+    outline: 4px solid #f0a000; outline-offset: 3px;
+  }
+  button:hover { filter: brightness(.94); }
+  label { display: inline-flex; flex-direction: column; gap: 5px; font-weight: 700; }
+  input[type="range"] { width: 160px; }
+  select, textarea, input[type="text"] {
+    border: 2px solid var(--border); border-radius: 10px;
+    padding: 10px; background: var(--panel); color: var(--text);
+  }
+  textarea { width: 100%; min-height: 125px; resize: vertical; }
+  .help { color: var(--muted); font-size: .95rem; }
+  .practice-text {
+    min-height: 150px; padding: 18px; border: 2px solid var(--border);
+    border-radius: 14px; background: var(--panel);
+    font-size: var(--font-size); line-height: var(--line-height);
+    overflow-wrap: anywhere; white-space: pre-wrap;
+    letter-spacing: .02em;
+  }
+  .char { border-radius: 4px; }
+  .char.done { color: var(--good); }
+  .char.current { background: #ffe36e; color: #111; outline: 2px solid #b47b00; }
+  .char.error { background: #ffd6d3; color: #8d160d; text-decoration: underline wavy; }
+  .stats { display: flex; flex-wrap: wrap; gap: 12px; margin: 14px 0; }
+  .stat {
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 12px; padding: 10px 16px; min-width: 125px;
+  }
+  .stat strong { display: block; font-size: 1.5rem; }
+  #typingInput {
+    width: 100%; min-height: 95px; font-size: 24px;
+    border: 3px solid var(--accent); border-radius: 14px;
+    padding: 14px; background: var(--panel); color: var(--text);
+  }
+  .status { min-height: 30px; font-weight: 700; margin-top: 10px; }
+  .status.good { color: var(--good); }
+  .status.bad { color: var(--bad); }
+  .small { font-size: .9rem; }
+  .file-input { display: none; }
+  footer { color: var(--muted); text-align: center; margin: 24px 0 8px; font-size: .9rem; }
+  @media (max-width: 600px) {
+    body { padding: 12px; }
+    .panel { padding: 15px; }
+    .controls > * { flex: 1 1 100%; }
+    .controls button { width: 100%; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>⌨️ Mi alleno a digitare</h1>
+    <p>Un passo alla volta. Puoi esercitarti con le parole che preferisci.</p>
+  </header>
+
+  <section class="panel" aria-labelledby="textTitle">
+    <h2 id="textTitle">1. Scegli il testo da copiare</h2>
+    <p class="help">Scrivi o incolla qui il testo. Puoi cambiarlo in qualsiasi momento.</p>
+    <label for="customText" style="display:block">Il mio testo</label>
+    <textarea id="customText" spellcheck="false">Ciao! Oggi mi alleno a usare la tastiera.
+Ogni parola è un piccolo traguardo.</textarea>
+    <div class="controls" style="margin-top:12px">
+      <button id="applyText">Usa questo testo</button>
+      <button id="sampleText" class="secondary">Inserisci un esempio</button>
+      <button id="clearText" class="secondary">Svuota il testo</button>
+    </div>
+  </section>
+
+  <section class="panel" aria-labelledby="practiceTitle">
+    <h2 id="practiceTitle">2. Guarda il testo e digita</h2>
+    <div class="practice-text" id="displayText" aria-label="Testo da copiare"></div>
+    <div class="stats" aria-live="polite">
+      <div class="stat"><span>Completamento</span><strong id="progress">0%</strong></div>
+      <div class="stat"><span>Caratteri corretti</span><strong id="correct">0</strong></div>
+      <div class="stat"><span>Da completare</span><strong id="remaining">0</strong></div>
+    </div>
+    <label for="typingInput" style="display:block;margin-bottom:8px">Scrivi qui</label>
+    <textarea id="typingInput" placeholder="Fai clic qui e inizia a digitare..." autocomplete="off" autocapitalize="off" spellcheck="false" aria-describedby="typingHelp"></textarea>
+    <p id="typingHelp" class="help">Puoi usare il tasto Backspace per correggere. Il testo viene controllato mentre scrivi.</p>
+    <div class="controls">
+      <button id="restart">Ricomincia</button>
+      <button id="focusInput" class="secondary">Vai al campo di scrittura</button>
+    </div>
+    <div id="status" class="status" role="status" aria-live="polite">Pronto? Quando vuoi, comincia!</div>
+  </section>
+
+  <section class="panel" aria-labelledby="settingsTitle">
+    <h2 id="settingsTitle">3. Personalizza la schermata</h2>
+    <div class="controls">
+      <label>Grandezza delle lettere
+        <select id="fontSize">
+          <option value="22">Piccola</option>
+          <option value="28" selected>Media</option>
+          <option value="36">Grande</option>
+          <option value="44">Molto grande</option>
+        </select>
+      </label>
+      <label>Spazio tra le righe
+        <select id="lineHeight">
+          <option value="1.4">Compatto</option>
+          <option value="1.8" selected>Normale</option>
+          <option value="2.2">Ampio</option>
+        </select>
+      </label>
+      <label>Colori
+        <select id="theme">
+          <option value="normal">Chiaro</option>
+          <option value="soft">Caldo e delicato</option>
+          <option value="contrast">Alto contrasto</option>
+        </select>
+      </label>
+    </div>
+    <p class="help">Le impostazioni cambiano subito. Scegli quelle più comode per chi sta imparando.</p>
+  </section>
+
+  <section class="panel" aria-labelledby="saveTitle">
+    <h2 id="saveTitle">4. Salva o recupera un'attività</h2>
+    <p>Puoi salvare il testo e le impostazioni in un file JSON. In seguito potrai caricare quel file per ritrovare l'attività.</p>
+    <div class="controls">
+      <button id="saveJson">Salva attività (JSON)</button>
+      <button id="loadJson" class="secondary">Carica attività (JSON)</button>
+      <input class="file-input" id="jsonFile" type="file" accept=".json,application/json">
+    </div>
+    <p class="help small">Il file viene salvato sul dispositivo. Il caricamento sostituisce il testo e le impostazioni attuali.</p>
+    <div id="fileStatus" class="status" role="status" aria-live="polite"></div>
+  </section>
+  <footer>Attività di esercizio: nessun dato viene inviato online.</footer>
+</div>
+
+<script>
+(() => {
+  const $ = id => document.getElementById(id);
+  const customText = $('customText');
+  const typingInput = $('typingInput');
+  let targetText = customText.value;
+
+  function render() {
+    const typed = typingInput.value;
+    const display = $('displayText');
+    display.replaceChildren();
+    if (!targetText.length) {
+      display.textContent = 'Inserisci un testo nella casella qui sopra e premi “Usa questo testo”.';
+    } else {
+      for (let i = 0; i < targetText.length; i++) {
+        const span = document.createElement('span');
+        span.className = 'char';
+        span.textContent = targetText[i] === ' ' ? '\u00a0' : targetText[i];
+        if (i < typed.length) {
+          if (typed[i] === targetText[i]) span.classList.add('done');
+          else span.classList.add('error');
+        } else if (i === typed.length) {
+          span.classList.add('current');
+        }
+        display.appendChild(span);
+      }
+    }
+    const correct = [...typed].filter((c, i) => c === targetText[i]).length;
+    const completed = targetText.length ? Math.min(100, Math.round(typed.length / targetText.length * 100)) : 0;
+    $('progress').textContent = completed + '%';
+    $('correct').textContent = correct;
+    $('remaining').textContent = Math.max(0, targetText.length - typed.length);
+    const status = $('status');
+    status.className = 'status';
+    if (!targetText.length) status.textContent = 'Aggiungi un testo per iniziare.';
+    else if (typed.length >= targetText.length && typed === targetText) {
+      status.textContent = '🎉 Bravissimo! Hai completato il testo!';
+      status.classList.add('good');
+    } else if (typed.length > 0 && typed[typed.length - 1] !== targetText[typed.length - 1]) {
+      status.textContent = 'Quasi! Controlla l’ultima lettera e riprova.';
+      status.classList.add('bad');
+    } else if (typed.length > 0) {
+      status.textContent = 'Bene, continua così!';
+      status.classList.add('good');
+    } else status.textContent = 'Pronto? Quando vuoi, comincia!';
+  }
+
+  function applyText() {
+    targetText = customText.value;
+    typingInput.value = '';
+    render();
+    typingInput.focus();
+  }
+  $('applyText').addEventListener('click', applyText);
+  $('sampleText').addEventListener('click', () => {
+    customText.value = 'Il sole splende.\nMi piace imparare cose nuove.\nSono pronto a fare pratica!';
+    applyText();
+  });
+  $('clearText').addEventListener('click', () => {
+    customText.value = '';
+    applyText();
+  });
+  $('restart').addEventListener('click', () => {
+    typingInput.value = '';
+    render();
+    typingInput.focus();
+  });
+  $('focusInput').addEventListener('click', () => typingInput.focus());
+  typingInput.addEventListener('input', render);
+
+  function applySettings(settings = {}) {
+    const font = ['22','28','36','44'].includes(String(settings.fontSize)) ? String(settings.fontSize) : '28';
+    const line = ['1.4','1.8','2.2'].includes(String(settings.lineHeight)) ? String(settings.lineHeight) : '1.8';
+    const theme = ['normal','soft','contrast'].includes(settings.theme) ? settings.theme : 'normal';
+    $('fontSize').value = font;
+    $('lineHeight').value = line;
+    $('theme').value = theme;
+    document.documentElement.style.setProperty('--font-size', font + 'px');
+    document.documentElement.style.setProperty('--line-height', line);
+    document.body.classList.toggle('soft-theme', theme === 'soft');
+    document.body.classList.toggle('high-contrast', theme === 'contrast');
+  }
+  function getSettings() {
+    return { fontSize: $('fontSize').value, lineHeight: $('lineHeight').value, theme: $('theme').value };
+  }
+  $('fontSize').addEventListener('change', e => applySettings({...getSettings(), fontSize: e.target.value}));
+  $('lineHeight').addEventListener('change', e => applySettings({...getSettings(), lineHeight: e.target.value}));
+  $('theme').addEventListener('change', e => applySettings({...getSettings(), theme: e.target.value}));
+
+  $('saveJson').addEventListener('click', () => {
+    const data = {
+      app: 'Mi alleno a digitare',
+      version: 1,
+      text: customText.value,
+      settings: getSettings()
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'attivita-digitazione.json';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    URL.revokeObjectURL(url);
+    $('fileStatus').textContent = 'File JSON creato. Puoi conservarlo e ricaricarlo quando vuoi.';
+    $('fileStatus').className = 'status good';
+  });
+
+  $('loadJson').addEventListener('click', () => $('jsonFile').click());
+  $('jsonFile').addEventListener('change', async e => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    try {
+      const data = JSON.parse(await file.text());
+      if (!data || typeof data.text !== 'string' || typeof data.settings !== 'object' || data.settings === null) {
+        throw new Error('Formato non riconosciuto');
+      }
+      customText.value = data.text;
+      applySettings(data.settings);
+      applyText();
+      $('fileStatus').textContent = 'Attività caricata correttamente!';
+      $('fileStatus').className = 'status good';
+    } catch (err) {
+      $('fileStatus').textContent = 'Non riesco a leggere questo file. Scegli un file JSON esportato da questa app.';
+      $('fileStatus').className = 'status bad';
+    }
+    e.target.value = '';
+  });
+
+  applySettings();
+  render();
+})();
+</script>
+</body>
+</html>
